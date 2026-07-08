@@ -1,0 +1,297 @@
+<%- include('partials/header') %>
+
+<main>
+    <section id="hero" class="relative w-full h-[80vh] overflow-hidden">
+        <div class="swiper heroSwiper w-full h-full">
+            <div class="swiper-wrapper">
+                
+                <div class="swiper-slide relative">
+                    <img src="/images/hero_one.png" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover object-center">
+                    
+                    <div class="absolute inset-0 bg-[#522D59] opacity-70 z-10"></div>
+
+                    <div class="relative z-20 container mx-auto h-full flex flex-col justify-center items-center text-center text-white px-4">
+                        <p class="text-sm uppercase tracking-widest mb-4 font-light">East Africa • Survivor-led</p>
+                        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight max-w-4xl mb-6">
+                            A community free of sexual violence and human trafficking.
+                        </h1>
+                        <p class="hidden md:block text-lg max-w-2xl mb-10 font-light opacity-90">
+                            Rebirth of a Queen is a women-led, survivor-led, and community-led organization working across East Africa to prevent violence and trafficking while empowering survivors to heal, lead, and thrive.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="/support" class="bg-yellow-400 text-black font-bold px-8 py-3 rounded-full hover:bg-yellow-300 transition shadow-lg">Support Our Mission</a>
+                            <a href="/partner" class="bg-transparent border-2 border-white text-white font-bold px-8 py-3 rounded-full hover:bg-white/10 transition">Partner With Us</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            
+            <div class="swiper-pagination !bottom-10 z-30"></div>
+            <div class="swiper-button-next text-white !right-10 scale-75 hidden md:flex"></div>
+            <div class="swiper-button-prev text-white !left-10 scale-75 hidden md:flex"></div>
+        </div>
+    </section>
+
+    <section id="stats" class="bg-[#522D59] text-white py-10 px-6">
+        <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            
+            <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="100">
+                <span class="text-4xl md:text-5xl font-bold text-yellow-400">5</span>
+                <span class="text-sm uppercase tracking-wider mt-2 opacity-90">Interconnected programs</span>
+            </div>
+
+            <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="200">
+                <span class="text-4xl md:text-5xl font-bold text-yellow-400">2</span>
+                <span class="text-sm uppercase tracking-wider mt-2 opacity-90">Social enterprises</span>
+            </div>
+
+            <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="300">
+                <span class="text-4xl md:text-5xl font-bold text-yellow-400">100%</span>
+                <span class="text-sm uppercase tracking-wider mt-2 opacity-90">Survivor-led approach</span>
+            </div>
+
+            <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="400">
+                <span class="text-4xl md:text-5xl font-bold text-yellow-400">3</span>
+                <span class="text-sm uppercase tracking-wider mt-2 opacity-90">Countries reached across East Africa</span>
+            </div>
+            
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-[#FDFBF7]">
+        <div class="container mx-auto flex flex-col md:flex-row items-center gap-16 px-6">
+            
+            <div class="w-full md:w-1/2 space-y-6" data-aos="fade-right">
+                <span class="text-[#522D59] font-bold tracking-widest uppercase text-sm border-l-4 border-yellow-400 pl-4">Who we are</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-[#2D1D30] leading-tight">
+                    Every survivor deserves more than survival.
+                </h2>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                    They deserve the opportunity to heal, rebuild, lead, and flourish. Rebirth of a Queen exists to transform lives by providing protection, holistic support, skills development, and economic opportunities — while mobilizing communities to prevent violence before it happens.
+                </p>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                    Our work is rooted in compassion, accountability, inclusion, and survivor leadership, because sustainable change begins within communities themselves.
+                </p>
+                <a href="/who-we-are" class="inline-block border-2 border-[#522D59] text-[#522D59] px-8 py-3 rounded-full font-bold hover:bg-[#522D59] hover:text-white transition duration-300">
+                    More about who we are
+                </a>
+            </div>
+
+            <div class="w-full md:w-1/2 relative" data-aos="fade-left">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="/images/membership.png" alt="Mentorship in action" class="w-full h-auto object-cover">
+                </div>
+            </div>
+        </div>
+    </section>    
+
+    <!-- Impact Model Section -->
+    <section id="impact-model" class="py-20 bg-[#522D59] text-white px-6">
+        <div class="container mx-auto">
+            <div class="mb-16">
+                <span class="text-yellow-400 font-bold tracking-widest uppercase text-sm border-l-4 border-white pl-4">Our impact model</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mt-4 max-w-3xl">
+                    Five stages, one direction — toward safety, leadership, and lasting change.
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <% 
+                    const stages = [
+                        { title: 'Prevent', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z', desc: 'Creating awareness and strengthening communities to stop violence before it happens.' },
+                        { title: 'Protect', icon: 'M13 10V3L4 14h7v7l9-11h-7z', desc: 'Providing survivor-centered support, safeguarding, shelter, and referrals.' },
+                        { title: 'Heal', icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', desc: 'Supporting mental wellness, leadership, mentorship, and long-term recovery.' },
+                        { title: 'Empower', icon: 'M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z', desc: 'Building economic independence through vocational skills, entrepreneurship, and social enterprise.' },
+                        { title: 'Transform', icon: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15', desc: 'Creating resilient communities where survivors become leaders and change-makers.' }
+                    ];
+                %>
+
+                <% stages.forEach((stage) => { %>
+                    <div class="bg-white/10 p-8 rounded-3xl border border-white/20 hover:bg-white/20 transition duration-300">
+                        <svg class="w-10 h-10 text-yellow-400 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<%= stage.icon %>"></path></svg>
+                        <h3 class="text-xl font-bold mb-4"><%= stage.title %></h3>
+                        <p class="text-sm opacity-80 leading-relaxed"><%= stage.desc %></p>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <section id="programs" class="py-20 bg-[#FDFBF7] px-6">
+        <div class="container mx-auto">
+            <div class="mb-16">
+                <span class="text-[#522D59] font-bold tracking-widest uppercase text-sm border-l-4 border-yellow-400 pl-4">Our Programs</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-[#2D1D30] leading-tight mt-4 max-w-2xl">
+                    Five interconnected programs carry this work from prevention to transformation.
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <% 
+                    const programs = [
+                        { num: '01', title: 'Prevent', desc: 'Prevention & Community Engagement', img: '/images/program_1.png' },
+                        { num: '02', title: 'Protect', desc: 'Rescue & Survivor Support', img: '/images/program_2.png' },
+                        { num: '03', title: 'Heal', desc: 'Healing & Leadership', img: '/images/program_3.png' },
+                        { num: '04', title: 'Empower', desc: 'Skills & Economic Empowerment', img: '/images/program_1.png' },
+                        { num: '05', title: 'Transform', desc: 'Research & Innovation', img: '/images/program_3.png' }
+                    ];
+                %>
+
+                <% programs.forEach(program => { %>
+                    <div class="group relative rounded-3xl overflow-hidden shadow-lg h-[400px]">
+                        <img src="<%= program.img %>" alt="<%= program.desc %>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent p-8 flex flex-col justify-end text-white">
+                            <span class="text-yellow-400 font-bold text-sm tracking-widest mb-2"><%= program.num %> · <%= program.title.toUpperCase() %></span>
+                            <h3 class="text-2xl font-bold"><%= program.desc %></h3>
+                        </div>
+                    </div>
+                <% }); %>
+
+                <div class="bg-[#522D59] rounded-3xl flex flex-col items-center justify-center p-8 text-center text-white h-[400px]">
+                    <h3 class="text-2xl font-bold mb-6">See the full picture</h3>
+                    <a href="/our-work" class="bg-yellow-400 text-black font-bold px-8 py-3 rounded-full hover:bg-yellow-300 transition">
+                        View our work
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="social-enterprises" class="py-20 bg-[#F1E6EF] px-6">
+        <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
+            
+            <div class="w-full md:w-1/2 space-y-6">
+                <span class="text-[#522D59] font-bold tracking-widest uppercase text-sm border-l-4 border-yellow-400 pl-4">Social Enterprises</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-[#2D1D30] leading-tight">
+                    Economic empowerment is central to lasting recovery.
+                </h2>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                    Our social enterprises provide practical training, dignified employment, and sustainable income opportunities for survivors and vulnerable young people.
+                </p>
+                <a href="/enterprises" class="inline-block border-2 border-[#522D59] text-[#522D59] px-8 py-3 rounded-full font-bold hover:bg-[#522D59] hover:text-white transition duration-300">
+                    Meet our enterprises
+                </a>
+            </div>
+
+            <div class="w-full md:w-1/2 grid grid-cols-2 gap-6">
+                <div class="relative rounded-3xl overflow-hidden shadow-lg group h-64 md:h-80">
+                    <img src="/images/amka_collections.png" alt="Amka Creations" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black/70 to-transparent">
+                        <h3 class="text-white font-bold text-lg">Amka Creations</h3>
+                    </div>
+                </div>
+                
+                <div class="relative rounded-3xl overflow-hidden shadow-lg group h-64 md:h-80">
+                    <img src="/images/fitness_buddies.png" alt="Fitness Buddies" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    <div class="absolute bottom-0 w-full p-6 bg-gradient-to-t from-black/70 to-transparent">
+                        <h3 class="text-white font-bold text-lg">Fitness Buddies</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Moments From The Field Section -->
+    <section id="gallery" class="py-20 bg-[#F1E6EF] overflow-hidden">
+        <div class="text-center mb-12 px-6">
+            <span class="text-[#522D59] font-bold tracking-widest uppercase text-sm border-l-4 border-yellow-400 pl-4">Moments from the field</span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-[#2D1D30] mt-4">Real people, real work, real change.</h2>
+        </div>
+
+        <!-- Marquee Container -->
+        <div class="flex overflow-hidden">
+            <div class="flex animate-marquee gap-6">
+                <% 
+                    const images = [
+                        '/images/Graphic_design_training.png', '/images/Tailoring_training.png', '/images/Amka_Creations_products.png', 
+                        '/images/Fitness_Buddies_group.png', '/images/Fitness_Buddies_group.png', '/images/Photography_training_outdoors.png'
+                    ]; 
+                %>
+                
+                <!-- List 1 -->
+                <% images.forEach(img => { %>
+                    <img src="<%= img %>" class="h-64 w-96 object-cover rounded-2xl flex-shrink-0" alt="Moment from the field">
+                <% }); %>
+
+                <!-- List 2 (Duplicate for seamless loop) -->
+                <% images.forEach(img => { %>
+                    <img src="<%= img %>" class="h-64 w-96 object-cover rounded-2xl flex-shrink-0" alt="Moment from the field">
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Our Work Matters Section -->
+    <section id="why-matters" class="py-20 bg-[#2E1633] text-white px-6">
+        <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
+            
+            <!-- Left: Text Content -->
+            <div class="w-full md:w-1/2 space-y-6">
+                <span class="text-yellow-400 font-bold tracking-widest uppercase text-sm border-l-4 border-white pl-4">Why our work matters</span>
+                
+                <div class="border-l-4 border-yellow-400 pl-6">
+                    <h2 class="text-3xl md:text-4xl font-light italic leading-tight">
+                        Behind every statistic is a person whose dreams have been interrupted — but not lost.
+                    </h2>
+                </div>
+                
+                <p class="text-white/80 leading-relaxed text-lg">
+                    Sexual violence and human trafficking continue to affect thousands of women, girls, and young people across East Africa. By investing in survivors, strengthening communities, and creating economic opportunities, we are building a future where safety, dignity, and opportunity are accessible to everyone.
+                </p>
+            </div>
+
+            <!-- Right: Image -->
+            <div class="w-full md:w-1/2">
+                <img src="/images/Community_members_celebrating_together.png" alt="Impact moment" class="rounded-3xl shadow-2xl w-full h-auto object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Get Involved Section -->
+    <section id="get-involved" class="py-24 px-6 bg-[#FDFBF7]">
+        <div class="container mx-auto text-center max-w-3xl">
+            <!-- Section Label -->
+            <span class="text-[#522D59] font-bold tracking-widest uppercase text-sm">Get Involved</span>
+            
+            <!-- Main Headline -->
+            <h2 class="text-4xl md:text-5xl font-extrabold text-[#2D1D30] mt-6 mb-8 leading-tight">
+                Join the movement. Restore hope. Create change.
+            </h2>
+            
+            <!-- Description -->
+            <p class="text-gray-600 text-lg mb-12 leading-relaxed">
+                Whether you choose to donate, volunteer, partner with us, purchase products from our social enterprises, or advocate for safer communities — your support helps transform lives.
+            </p>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/support" class="bg-[#522D59] text-white font-bold px-8 py-3 rounded-full hover:bg-purple-900 transition shadow-lg">
+                    Support Our Mission
+                </a>
+                <a href="/partner" class="border-2 border-[#522D59] text-[#522D59] font-bold px-8 py-3 rounded-full hover:bg-[#522D59] hover:text-white transition">
+                    Partner With Us
+                </a>
+                <a href="/volunteer" class="border-2 border-[#522D59] text-[#522D59] font-bold px-8 py-3 rounded-full hover:bg-[#522D59] hover:text-white transition">
+                    Become a Volunteer
+                </a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script>
+    // Initialize Swiper after the DOM is ready
+    const swiper = new Swiper('.heroSwiper', {
+        loop: true,
+        effect: 'fade',
+        speed: 800,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        autoplay: { delay: 3000, disableOnInteraction: false },
+    });
+</script>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,66 @@
+<footer class="bg-[#522D59] text-white py-12 px-6">
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <div class="flex flex-col space-y-4">
+            <img src="/images/rebith_of_a_queen_white_logo.png" alt="Rebirth of a Queen" class="w-32">
+            <p class="text-sm opacity-90 max-w-xs">
+                Rising beyond trauma. Restoring hope. Building safe communities across East Africa.
+            </p>
+        </div>
+
+        <div>
+            <h3 class="font-bold mb-4">EXPLORE</h3>
+            <ul class="space-y-2 opacity-80 text-sm">
+                <li><a href="/who-we-are" class="hover:underline">Who We Are</a></li>
+                <li><a href="/our-work" class="hover:underline">Our Work</a></li>
+                <li><a href="/social-enterprises" class="hover:underline">Social Enterprises</a></li>
+                <li><a href="/get-involved" class="hover:underline">Get Involved</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="font-bold mb-4">GET INVOLVED</h3>
+            <ul class="space-y-2 opacity-80 text-sm">
+                <li><a href="/donate" class="hover:underline">Donate</a></li>
+                <li><a href="/volunteer" class="hover:underline">Volunteer</a></li>
+                <li><a href="/partner" class="hover:underline">Partner with us</a></li>
+                <li><a href="/shop" class="hover:underline">Shop our enterprises</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3 class="font-bold mb-4">CONTACT</h3>
+            <ul class="space-y-2 opacity-80 text-sm">
+                <li>General enquiries</li>
+                <li>Media & partnerships</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Legal Links & Copyright -->
+    <div class="container mx-auto mt-12 pt-8 border-t border-white border-opacity-20 text-xs">
+        <div class="flex flex-col md:flex-row justify-between items-center opacity-70">
+            <p>&copy; <%= new Date().getFullYear() %> Rebirth of a Queen. All rights reserved.</p>
+            
+            <!-- Added Legal Links Row -->
+            <div class="flex gap-6 mt-4 md:mt-0">
+                <a href="/privacy-policy" class="hover:underline">Privacy Policy</a>
+                <a href="/terms-of-service" class="hover:underline">Terms of Service</a>
+            </div>
+            
+            <p class="mt-4 md:mt-0 italic hidden md:block">A community free of sexual violence and human trafficking.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000, // Animation duration
+    once: true,     // Animate only once
+  });
+</script>
+
+
+</body>
+</html>

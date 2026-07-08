@@ -1,0 +1,126 @@
+<%- include('partials/header') %>
+
+    <!-- About Hero Section -->
+    <section class="relative h-[60vh] flex items-center justify-center">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="/images/Peer_mentorship_and_leadership-session.png" alt="Our team" class="w-full h-full object-cover">
+            <!-- Dark Overlay -->
+            <div class="absolute inset-0 bg-[#2D1D30]/80"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-6 relative z-10 text-left">
+            <div class="max-w-3xl">
+                <span class="text-yellow-400 font-bold tracking-widest uppercase text-sm border-l-4 border-white pl-4">Who we are</span>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mt-6 leading-tight">
+                    Every survivor deserves more than survival — they deserve the opportunity to heal, rebuild, lead, and flourish.
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Content Section -->
+    <section class="py-20 bg-[#FDFBF7] px-6">
+        <div class="container mx-auto flex flex-col md:flex-row items-center gap-16">
+            
+            <!-- Left: Text Content -->
+            <div class="w-full md:w-1/2 space-y-6">
+                <span class="text-[#522D59] font-bold tracking-widest uppercase text-sm border-l-4 border-yellow-400 pl-4">Our Story</span>
+                
+                <h2 class="text-4xl md:text-5xl font-extrabold text-[#2D1D30] leading-tight">
+                    Women-led. Survivor-led. Community-led.
+                </h2>
+                
+                <div class="text-gray-600 leading-relaxed text-lg space-y-4">
+                    <p>
+                        Rebirth of a Queen exists to transform lives by providing protection, holistic support, skills development, and economic opportunities — while mobilizing communities to prevent violence before it happens.
+                    </p>
+                    <p>
+                        Our work is rooted in compassion, accountability, inclusion, and survivor leadership, because sustainable change begins within communities themselves. We work across East Africa to prevent sexual violence and human trafficking while empowering survivors, women, young people, and vulnerable communities to heal, lead, and thrive.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right: Image -->
+            <div class="w-full md:w-1/2">
+                <img src="/images/Community_awareness_and_engagement_session.png" alt="Our team in session" class="rounded-3xl shadow-2xl w-full h-auto object-cover">
+            </div>
+        </div>
+    </section>
+
+    <section id="vision-mission" class="py-20 bg-[#2E1633] text-white px-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 border-t border-white/20 pt-16">
+                
+                <div class="space-y-6">
+                    <span class="text-yellow-400 font-bold tracking-widest uppercase text-sm border-l-4 border-white pl-4">Our Vision</span>
+                    <h2 class="text-4xl md:text-5xl font-extrabold leading-tight">
+                        A community free of sexual violence and human trafficking.
+                    </h2>
+                </div>
+
+                <div class="space-y-6">
+                    <span class="text-yellow-400 font-bold tracking-widest uppercase text-sm border-l-4 border-white pl-4">Our Mission</span>
+                    <p class="text-lg md:text-xl leading-relaxed opacity-90">
+                        To prevent sexual violence and human trafficking while empowering survivors, women, youth, and vulnerable communities through protection, healing, advocacy, leadership, skills development, and economic empowerment.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Model Section -->
+    <section id="impact-model" class="py-20 bg-[#FDFBF7] px-6">
+        <div class="container mx-auto">
+            <!-- Header -->
+            <div class="mb-16">
+                <span class="text-[#522D59] font-bold tracking-widest uppercase text-sm border-l-4 border-yellow-400 pl-4">Our Impact Model</span>
+                <h2 class="text-4xl md:text-5xl font-extrabold text-[#2D1D30] leading-tight mt-4 max-w-3xl">
+                    Five stages carry every survivor from crisis to leadership.
+                </h2>
+            </div>
+
+            <!-- Grid of 5 Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <% 
+                    const stages = [
+                        { title: 'Prevent', desc: 'Creating awareness and strengthening communities to stop violence before it happens.' },
+                        { title: 'Protect', desc: 'Providing survivor-centered support, safeguarding, shelter, and referrals.' },
+                        { title: 'Heal', desc: 'Supporting mental wellness, leadership, mentorship, and long-term recovery.' },
+                        { title: 'Empower', desc: 'Building economic independence through vocational skills, entrepreneurship, and social enterprise.' },
+                        { title: 'Transform', desc: 'Creating resilient communities where survivors become leaders and change-makers.' }
+                    ];
+                %>
+
+                <% stages.forEach((stage) => { %>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl">
+                        <h3 class="text-yellow-600 font-bold mb-4 uppercase tracking-wider text-sm"><%= stage.title %></h3>
+                        <p class="text-gray-600 leading-relaxed text-sm"><%= stage.desc %></p>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Believe Section -->
+    <section id="what-we-believe" class="py-24 px-6 bg-[#F5F0F0]">
+        <div class="container mx-auto max-w-4xl text-center">
+            <!-- Label -->
+            <span class="text-[#522D59] font-bold tracking-widest uppercase text-sm border-l-4 border-yellow-400 pl-4 inline-block mb-8">What we believe</span>
+            
+            <!-- Headline -->
+            <h2 class="text-4xl md:text-6xl font-extrabold text-[#2D1D30] leading-tight mb-10 italic">
+                "Behind every statistic is a person whose dreams have been interrupted — but not lost."
+            </h2>
+            
+            <!-- Supporting Text -->
+            <p class="text-gray-600 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
+                Sexual violence and human trafficking continue to affect thousands of women, girls, and young people across East Africa. By investing in survivors, strengthening communities, and creating economic opportunities, we are building a future where safety, dignity, and opportunity are accessible to everyone.
+            </p>
+        </div>
+    </section>
+
+
+<%- include('partials/footer') %>

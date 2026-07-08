@@ -1,0 +1,113 @@
+<%- include('../partials/header') %>
+<main class="py-20 bg-[#FDFBF7] px-6">
+    <div class="max-w-md mx-auto bg-white p-8 rounded-3xl shadow-lg">
+        <h2 class="text-3xl font-bold text-[#2D1D30] mb-6 text-center">Create Account</h2>
+        <form id="registerForm" action="/register" method="POST" class="space-y-4">
+            <input type="text" name="full_name" placeholder="Full Name" required class="w-full p-4 border rounded-xl">
+            <input type="email" name="email" placeholder="Email Address" required class="w-full p-4 border rounded-xl">
+            
+            <div class="relative">
+                <input type="password" id="password" name="password" placeholder="Password (min 8 chars)" required class="w-full p-4 border rounded-xl">
+                <button type="button" onclick="togglePassword('password')" class="absolute right-4 top-4 text-gray-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </button>
+            </div>
+            <div id="passwordIndicator" class="text-sm font-semibold"></div>
+
+            <div class="relative">
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required class="w-full p-4 border rounded-xl">
+                <button type="button" onclick="togglePassword('confirm_password')" class="absolute right-4 top-4 text-gray-500">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </button>
+            </div>
+            <div id="matchIndicator" class="text-sm font-semibold"></div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-[#522D59] text-white p-4 rounded-xl font-bold hover:bg-[#3D2142] disabled:bg-gray-400">Register</button>
+        </form>
+    </div>
+</main>
+
+<script>
+    const password = document.getElementById('password');
+    const confirm = document.getElementById('confirm_password');
+    const passIndicator = document.getElementById('passwordIndicator');
+    const matchIndicator = document.getElementById('matchIndicator');
+    const submitBtn = document.getElementById('submitBtn');
+    const registerForm = document.getElementById('registerForm');
+
+    function togglePassword(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function validate() {
+        if (password.value.length < 8) {
+            passIndicator.textContent = "Too short (min 8 characters)";
+            passIndicator.className = "text-red-500 text-sm";
+        } else {
+            passIndicator.textContent = "Password secure";
+            passIndicator.className = "text-green-500 text-sm";
+        }
+
+        if (confirm.value.length > 0) {
+            if (password.value !== confirm.value) {
+                matchIndicator.textContent = "Passwords do not match";
+                matchIndicator.className = "text-red-500 text-sm";
+            } else {
+                matchIndicator.textContent = "Passwords match";
+                matchIndicator.className = "text-green-500 text-sm";
+            }
+        }
+        
+        submitBtn.disabled = (password.value.length < 8 || password.value !== confirm.value);
+    }
+
+    password.addEventListener('input', validate);
+    confirm.addEventListener('input', validate);
+
+    // SweetAlert2 Logic
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Stop default form reload
+
+        // Show loading state
+        Swal.fire({
+            title: 'Registering...',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+
+        const formData = new FormData(registerForm);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: result.message,
+                    confirmButtonColor: '#522D59'
+                }).then(() => {
+                    window.location.href = '/login';
+                });
+            } else {
+                throw new Error(result.message || 'Registration failed');
+            }
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: err.message,
+                confirmButtonColor: '#522D59'
+            });
+        }
+    });
+</script>
+<%- include('../partials/footer') %>

@@ -1,0 +1,13 @@
+<%- include('../partials/header') %>
+<main class="py-20 bg-[#FDFBF7] px-6">
+    <div class="max-w-md mx-auto bg-white p-8 rounded-3xl shadow-lg">
+        <h2 class="text-3xl font-bold text-[#2D1D30] mb-6 text-center">New Password</h2>
+        <!-- The token will be passed via URL and included as a hidden field -->
+        <form action="/reset-password" method="POST" class="space-y-4">
+            <input type="hidden" name="token" value="<%= token %>">
+            <input type="password" name="password" placeholder="Enter new password" required class="w-full p-4 border rounded-xl">
+            <button type="submit" class="w-full bg-[#522D59] text-white p-4 rounded-xl font-bold">Update Password</button>
+        </form>
+    </div>
+</main>
+<%- include('../partials/footer') %>

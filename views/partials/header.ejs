@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#522D59',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            animation: marquee 20s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <nav class="flex items-center justify-between p-4 bg-white shadow-md z-40 relative">
+        <div class="flex items-center">
+            <a href="/">
+                <img src="/images/rebirth_of_a_queen.png" alt="Rebirth of a Queen" class="h-10 md:h-16 w-auto transition-all duration-300">
+            </a>
+        </div>
+
+        <div class="hidden md:flex space-x-6 items-center text-primary font-medium">
+            <a href="/" class="border-b-2 border-yellow-400">Home</a>
+            <a href="/about" class="hover:text-purple-700">Who We Are</a>
+            <a href="/ourPrograms" class="hover:text-purple-700">Our Work</a>
+            <a href="/social-enterprises" class="hover:text-purple-700">Social Enterprises</a>
+            <a href="/get-involved" class="hover:text-purple-700">Get Involved</a>
+            <a href="/support" class="bg-yellow-400 text-black px-5 py-2 rounded-full hover:bg-yellow-500 transition">Support Our Mission</a>
+        </div>
+
+        <button id="menu-btn" class="md:hidden text-primary focus:outline-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 z-50 invisible">
+        <div id="close-overlay" class="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
+        
+        <div id="drawer-content" class="absolute left-0 top-0 h-full w-64 bg-white p-6 shadow-xl transform -translate-x-full transition-transform duration-300 ease-in-out">
+            <button id="close-btn" class="mb-8 text-primary">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <div class="flex flex-col space-y-6 text-primary font-medium">
+                <a href="/" class="block">Home</a>
+                <a href="/about" class="block">Who We Are</a>
+                <a href="/ourPrograms" class="block">Our Work</a>
+                <a href="/social-enterprises" class="block">Social Enterprises</a>
+                <a href="/get-involved" class="block">Get Involved</a>
+                <a href="/support" class="bg-yellow-400 text-black px-4 py-2 rounded text-center">Support Our Mission</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const drawerContent = document.getElementById('drawer-content');
+        const overlay = document.getElementById('close-overlay');
+        const closeBtn = document.getElementById('close-btn');
+
+        const toggleMenu = () => {
+            const isOpen = !mobileMenu.classList.contains('invisible');
+
+            if (isOpen) {
+                // Close animation
+                drawerContent.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    mobileMenu.classList.add('invisible');
+                }, 300);
+            } else {
+                // Open animation
+                mobileMenu.classList.remove('invisible');
+                void drawerContent.offsetWidth; 
+                drawerContent.classList.remove('-translate-x-full');
+                overlay.classList.remove('opacity-0');
+            }
+        };
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+    </script>
