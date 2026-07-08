@@ -2,8 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const app = express();
-const { sequelize } = require('./config/db');
+//// DB disabled for local running without database
+//// const { sequelize } = require('./config/db');
 const authRoutes = require('./routes/auth');
+const testRoutes = require('./routes/test');
 
 // Import your page routes
 const pageRoutes = require('./routes/pages');
@@ -17,6 +19,7 @@ app.use(express.json());
 // Use the routes
 app.use('/', pageRoutes);
 app.use('/', authRoutes);
+app.use('/', testRoutes);
 
 
 // 404 Catch-all route
@@ -29,14 +32,4 @@ app.use((req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-// Database Connection Check
-sequelize.authenticate()
-  .then(() => {
-    console.log(`✅ Database connected: ${process.env.NODE_ENV === 'production' ? 'PRODUCTION' : 'LOCAL'}`);
-    console.log(`📂 Database Name: ${process.env.NODE_ENV === 'production' ? process.env.LIVE_DB_NAME : process.env.LOCAL_DB_NAME}`);
-    
-    app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
-  })
-  .catch(err => {
-    console.error('❌ Unable to connect to the database:', err);
-  });
+app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
