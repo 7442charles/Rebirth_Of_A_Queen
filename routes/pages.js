@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { isAdmin } = require('../middleware/authMiddleware');
 
 // Home Route
 router.get('/', (req, res) => {
@@ -56,6 +57,14 @@ router.get('/reset-password', (req, res) => {
         title: 'Reset Password', 
         activePage: 'login',
         token: token 
+    });
+});
+
+// Admin Dashboard Route - Only accessible by admins
+router.get('/admin-dashboard', isAdmin, (req, res) => {
+    res.render('admin/dashboard', { 
+        title: 'Admin Dashboard | Rebirth of a Queen',
+        activePage: 'dashboard'
     });
 });
 

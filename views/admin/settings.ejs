@@ -1,0 +1,42 @@
+<%- include('../partials/header') %>
+<!-- (Sidebar remains same as previous steps) -->
+
+<main class="flex-1 p-8">
+    <h1 class="text-3xl font-bold text-[#2D1D30] mb-8">System Settings</h1>
+    
+    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 max-w-2xl">
+        <h2 class="text-xl font-bold mb-6">Update Donation Link</h2>
+        <form id="settingsForm" class="space-y-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2">Support Our Mission URL</label>
+                <input type="url" id="donationUrl" name="donationUrl" value="<%= donationLink %>" 
+                       class="w-full p-4 border rounded-xl outline-none focus:border-[#522D59]" 
+                       placeholder="https://donorbox.org/your-link">
+            </div>
+            <button type="submit" class="bg-[#522D59] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#3D2142]">
+                Save Link
+            </button>
+        </form>
+    </div>
+</main>
+
+<script>
+    const settingsForm = document.getElementById('settingsForm');
+    settingsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const donationUrl = document.getElementById('donationUrl').value;
+
+        const response = await fetch('/admin/settings/update-donation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ donationUrl })
+        });
+
+        if (response.ok) {
+            Swal.fire('Success', 'Donation link updated globally!', 'success');
+        } else {
+            Swal.fire('Error', 'Failed to update link.', 'error');
+        }
+    });
+</script>
+<%- include('../partials/footer') %>

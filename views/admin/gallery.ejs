@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+<div class="flex min-h-screen bg-gray-50">
+    <%- include('../partials/admin-sidebar', { activePage: 'gallery' }) %>
+
+    <main class="flex-1 p-8">
+        <h1 class="text-3xl font-bold mb-8">Gallery Manager</h1>
+
+        <!-- Upload Form -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm mb-8">
+            <form action="/admin/gallery/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="image" required class="mb-4">
+                <input type="text" name="alt_text" placeholder="Alt text (e.g. Event Name)" class="w-full p-2 border rounded-xl mb-4">
+                <button type="submit" class="bg-[#522D59] text-white px-6 py-2 rounded-xl">Upload Image</button>
+            </form>
+        </div>
+
+        <!-- Grid of Images -->
+        <div class="grid grid-cols-4 gap-4">
+            <% images.forEach(img => { %>
+                <div class="bg-white p-2 rounded-xl shadow">
+                    <img src="<%= img.image_path %>" alt="<%= img.alt_text %>" class="w-full h-40 object-cover rounded-lg">
+                    <p class="text-xs mt-2 text-gray-500"><%= img.alt_text %></p>
+                </div>
+            <% }); %>
+        </div>
+    </main>
+</div>
+<%- include('../partials/footer') %>

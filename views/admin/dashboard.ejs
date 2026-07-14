@@ -1,0 +1,65 @@
+<%- include('../partials/header') %>
+
+<div class="flex min-h-screen bg-gray-50">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#2D1D30] text-white p-6">
+        <h2 class="text-2xl font-bold mb-10">Admin Panel</h2>
+        <!-- Sidebar Navigation -->
+        <nav class="space-y-2">
+            <a href="/admin/dashboard" 
+            class="block py-3 px-4 rounded-xl transition <%= activePage === 'dashboard' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">
+            Dashboard
+            </a>
+            <a href="/admin/programs" 
+            class="block py-3 px-4 rounded-xl transition <%= activePage === 'programs' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">
+            Programs
+            </a>
+            <a href="/admin/blog" 
+            class="block py-3 px-4 rounded-xl transition <%= activePage === 'blog' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">
+            Blog Posts
+            </a>
+            <a href="/admin/gallery" 
+            class="block py-3 px-4 rounded-xl transition <%= activePage === 'gallery' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">
+            Gallery
+            </a>
+            <a href="/admin/settings" 
+            class="block py-3 px-4 rounded-xl transition <%= activePage === 'settings' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">
+            Settings
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+        <h1 class="text-3xl font-bold text-[#2D1D30] mb-8">Dashboard</h1>
+        
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+            <h2 class="text-xl font-bold mb-6 text-[#2D1D30]">Create New Content</h2>
+            <form action="/admin/save" method="POST">
+                <input type="text" name="title" placeholder="Post Title" class="w-full p-4 border border-gray-300 mb-6 rounded-xl outline-none focus:border-[#522D59]">
+                
+                <textarea id="summernote" name="content"></textarea>
+                
+                <button type="submit" class="mt-8 bg-[#522D59] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#3D2142] transition">Save Content</button>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            placeholder: 'Start writing your amazing content...',
+            tabsize: 2,
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture', 'video']]
+            ]
+        });
+    });
+</script>
+<%- include('../partials/footer') %>

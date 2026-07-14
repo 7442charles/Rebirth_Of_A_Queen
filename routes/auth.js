@@ -10,20 +10,23 @@ router.post('/register', async (req, res) => {
     const { full_name, email, password } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
+        
         await sequelize.query(
             "INSERT INTO users (full_name, email, password_hash) VALUES (?, ?, ?)",
             { replacements: [full_name, email, hashedPassword] }
         );
 
-        // SEND WELCOME EMAIL
-        // We do this after the DB insertion succeeds
-        await sendWelcomeEmail({ name: full_name, email: email });
+        // ONLY send email if in production, or if you have a local email test server
+        if (process.env.NODE_ENV === 'production') {
+            await sendWelcomeEmail({ name: full_name, email: email });
+        } else {
+            console.log("Development mode: Welcome email skipped for " + email);
+        }
 
-        // Send JSON instead of redirecting immediately
-        res.status(201).json({ message: "Account created successfully!" });
+        res.status(201).json({ message: "Account created successfully! Welcome to the Rebirth of a Queen family." });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Email already exists or Try login In." });
+        res.status(500).json({ message: "Registration failed: Email may already be in use." });
     }
 });
 
@@ -44,6 +47,15 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: "Invalid email or password." });
         }
 
+        // SAVE USER DATA TO SESSION
+        // This makes the user "logged in" across your entire site
+        req.session.userId = user.id;
+        req.session.role = user.role; 
+        req.session.save((err) => { // Force the session to save to the store
+            if (err) console.error("Session save error:", err);
+            console.log("Session saved! Role is:", req.session.role);
+        });
+
         // Determine Redirect URL based on role
         const redirectUrl = user.role === 'admin' ? '/admin-dashboard' : '/';
 
@@ -56,6 +68,7 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: "Server error during login." });
     }
 });
+
 
 // Forgot Password Logic
 router.post('/forgot-password', async (req, res) => {
