@@ -3,25 +3,45 @@
     <%- include('../partials/admin-sidebar', { activePage: 'gallery' }) %>
 
     <main class="flex-1 p-8">
-        <h1 class="text-3xl font-bold mb-8">Gallery Manager</h1>
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-[#2D1D30]">Gallery Management</h1>
+            <div class="text-sm text-gray-500"><%= images.length %> Images Uploaded</div>
+        </header>
 
-        <!-- Upload Form -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm mb-8">
-            <form action="/admin/gallery/upload" method="POST" enctype="multipart/form-data">
-                <input type="file" name="image" required class="mb-4">
-                <input type="text" name="alt_text" placeholder="Alt text (e.g. Event Name)" class="w-full p-2 border rounded-xl mb-4">
-                <button type="submit" class="bg-[#522D59] text-white px-6 py-2 rounded-xl">Upload Image</button>
-            </form>
-        </div>
-
-        <!-- Grid of Images -->
-        <div class="grid grid-cols-4 gap-4">
-            <% images.forEach(img => { %>
-                <div class="bg-white p-2 rounded-xl shadow">
-                    <img src="<%= img.image_path %>" alt="<%= img.alt_text %>" class="w-full h-40 object-cover rounded-lg">
-                    <p class="text-xs mt-2 text-gray-500"><%= img.alt_text %></p>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Upload Panel -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 sticky top-8">
+                    <h2 class="text-lg font-bold mb-4 text-[#2D1D30]">Upload New Image</h2>
+                    <form action="/admin/gallery/upload" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        <div class="border-2 border-dashed border-gray-200 rounded-2xl p-6 text-center hover:border-[#522D59] transition cursor-pointer">
+                            <input type="file" name="image" required class="w-full">
+                        </div>
+                        <input type="text" name="alt_text" placeholder="Description (e.g. Annual Gala)" class="w-full p-3 border rounded-xl outline-none focus:border-[#522D59]">
+                        <button type="submit" class="w-full bg-[#522D59] text-white py-3 rounded-xl font-bold hover:bg-[#3D2142] transition">Upload to Gallery</button>
+                    </form>
                 </div>
-            <% }); %>
+            </div>
+
+            <!-- Image Grid -->
+            <div class="lg:col-span-2">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <% if (images && images.length > 0) { %>
+                        <% images.forEach(img => { %>
+                            <div class="group relative bg-white p-2 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
+                                <img src="<%= img.image_path %>" alt="<%= img.alt_text %>" class="w-full h-48 object-cover rounded-xl">
+                                <div class="p-2">
+                                    <p class="text-sm font-medium text-gray-700 truncate"><%= img.alt_text %></p>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="col-span-full py-20 text-center text-gray-400">
+                            <p>No images found. Upload your first one!</p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
         </div>
     </main>
 </div>

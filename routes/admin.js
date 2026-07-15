@@ -4,6 +4,12 @@ const { sequelize } = require('../config/db');
 const { isAdmin } = require('../middleware/authMiddleware');
 const upload = require('../middleware/upload');
 
+
+router.use((req, res, next) => {
+    res.locals.images = []; // Default to empty
+    next();
+});
+
 // Main Dashboard
 router.get('/admin/dashboard', isAdmin, (req, res) => {
     res.render('admin/dashboard');
@@ -36,8 +42,20 @@ router.get('/admin/settings', isAdmin, async (req, res) => {
 
 // View Gallery
 router.get('/admin/gallery', isAdmin, async (req, res) => {
-    const [images] = await sequelize.query("SELECT * FROM gallery ORDER BY uploaded_at DESC");
-    res.render('admin/gallery', { title: 'Gallery', activePage: 'gallery', images });
+    try {
+        // Query the database
+        const [images] = await sequelize.query("SELECT * FROM gallery ORDER BY uploaded_at DESC");
+        
+        // Pass data directly to render
+        res.render('admin/gallery', { 
+            title: 'Gallery Manager', 
+            activePage: 'gallery', 
+            images: images // This will now correctly populate the page
+        });
+    } catch (error) {
+        console.error(error);
+        res.render('admin/gallery', { title: 'Gallery Manager', activePage: 'gallery', images: [] });
+    }
 });
 
 // Upload Image
