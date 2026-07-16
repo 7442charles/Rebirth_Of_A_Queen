@@ -1,10 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const { sequelize } = require('../config/db');
 const { isAdmin } = require('../middleware/authMiddleware');
 
-// Home Route
-router.get('/', (req, res) => {
-    res.render('index', { title: 'Home' });
+/* Home Route */
+router.get('/', async (req, res) => {
+    try {
+        const [latestPosts] = await sequelize.query(
+            "SELECT id, title, slug, content, created_at FROM blog_posts ORDER BY created_at DESC LIMIT 3"
+        );
+
+        res.render('index', {
+            title: 'Home',
+            latestPosts: latestPosts || []
+        });
+    } catch (e) {
+        console.error('Failed to load latest blog posts:', e);
+        res.render('index', { title: 'Home', latestPosts: [] });
+    }
 });
 
 // About Route
@@ -20,6 +33,31 @@ router.get('/ourPrograms', (req, res) => {
     res.render('programs', {
         title: 'Our Programs | Rebirth of a Queen',
         activePage: 'programs'
+    });
+});
+
+// --- Blog (Public) ---
+router.get('/blog', async (req, res) => {
+    const [posts] = await sequelize.query("SELECT * FROM blog_posts ORDER BY created_at DESC");
+    res.render('blog', {
+        title: 'Blog | Rebirth of a Queen',
+        activePage: 'blog',
+        posts: posts || []
+    });
+});
+
+router.get('/blog/:slug', async (req, res) => {
+    const { slug } = req.params;
+    const [rows] = await sequelize.query("SELECT * FROM blog_posts WHERE slug = ? LIMIT 1", { replacements: [slug] });
+
+    if (!rows || rows.length === 0) {
+        return res.status(404).render('404', { title: '404 - Not Found', activePage: null });
+    }
+
+    res.render('blog-post', {
+        title: rows[0].title + ' | Rebirth of a Queen',
+        activePage: 'blog',
+        post: rows[0]
     });
 });
 
