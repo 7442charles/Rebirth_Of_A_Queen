@@ -100,12 +100,12 @@ router.get('/reset-password', (req, res) => {
 });
 
 // Admin Dashboard Route - Only accessible by admins
-router.get('/admin-dashboard', isAdmin, (req, res) => {
-    res.render('admin/dashboard', { 
-        title: 'Admin Dashboard | Rebirth of a Queen',
-        activePage: 'dashboard'
-    });
-});
+// router.get('/admin-dashboard', isAdmin, (req, res) => {
+//     res.render('admin/dashboard', { 
+//         title: 'Admin Dashboard | Rebirth of a Queen',
+//         activePage: 'dashboard'
+//     });
+// });
 
 router.get('/about', (req, res) => {
     res.render('about', { 
@@ -155,7 +155,7 @@ router.get('/get-involved', (req, res) => {
                 message 
             });
 
-            res.redirect('/?status=success');
+            res.redirect('/contact?status=success');
         } catch (error) {
             console.error("Submission Error:", error);
             res.status(500).send("Error submitting form.");

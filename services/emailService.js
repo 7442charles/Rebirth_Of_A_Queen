@@ -23,7 +23,7 @@ const sendWelcomeEmail = async (userData) => {
 
     const transporter = createTransporter();
     const mailOptions = {
-        from: `"Rebirth of a Queen" <${process.env.EMAIL_USER}>`,
+        from: '"Rebirth of a Queen" <noreply@therebirthofaqueen.com>',
         to: userData.email,
         subject: 'Welcome to the Rebirth of a Queen Family!',
         html: `
@@ -49,7 +49,7 @@ const sendPasswordResetEmail = async (email, resetUrl) => {
 
     const transporter = createTransporter();
     const mailOptions = {
-        from: `"Rebirth of a Queen" <${process.env.EMAIL_USER}>`,
+        from: '"Rebirth of a Queen" <noreply@therebirthofaqueen.com>',
         to: email,
         subject: 'Reset Your Password - Rebirth of a Queen',
         html: `
@@ -75,10 +75,26 @@ const sendInquiryEmail = async (inquiry) => {
 
     const transporter = createTransporter();
     await transporter.sendMail({
-        from: '"Rebirth of a Queen" <info@therebirthofaqueen.com>',
-        to: 'your-admin-email@example.com',
+        from: '"Rebirth of a Queen" <noreply@therebirthofaqueen.com>',
+        to: 'admin@therebirthofaqueen.com',
         subject: `New ${inquiry.interest} Inquiry from ${inquiry.name}`,
         text: `You have a new inquiry:\nName: ${inquiry.name}\nEmail: ${inquiry.email}\nInterest: ${inquiry.interest}`
+    });
+
+    await transporter.sendMail({
+        from: '"Rebirth of a Queen" <noreply@therebirthofaqueen.com>',
+        to: inquiry.email, // Send to the person who filled the form
+        subject: 'We have received your inquiry',
+        html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; padding: 20px;">
+                <h2 style="color: #522D59;">Request Received</h2>
+                <p>Hello ${inquiry.name},</p>
+                <p>Thank you for reaching out to Rebirth of a Queen. We have successfully received your inquiry regarding <strong>${inquiry.interest}</strong>.</p>
+                <p>Our team is reviewing your message, and we will get back to you as soon as possible.</p>
+                <br>
+                <p>Best regards,<br>The Rebirth of a Queen Team</p>
+            </div>
+        `
     });
 };
 

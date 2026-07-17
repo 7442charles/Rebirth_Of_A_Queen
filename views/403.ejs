@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<div class="bg-gray-50 flex items-center justify-center min-h-screen text-center">
+<div class="p-8 bg-white rounded-3xl shadow-sm border border-gray-100 max-w-md">
+        <h1 class="text-6xl font-bold text-[#522D59] mb-4">403</h1>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Access Denied</h2>
+        <p class="text-gray-600 mb-8">You do not have the required administrator privileges to view this page.</p>
+        
+        <div class="space-y-3">
+            <a href="/login" class="block w-full bg-[#522D59] text-white py-3 rounded-xl font-bold hover:bg-[#3D2142] transition">
+                Return to Login
+            </a>
+            <a href="/" class="block w-full text-gray-500 hover:text-gray-700 font-medium">
+                Back to Home
+            </a>
+        </div>
+</div>
+</div>
+<%- include('partials/footer') %>

@@ -3,8 +3,11 @@ const isAdmin = (req, res, next) => {
     if (req.session && req.session.role === 'admin') {
         return next();
     }
-    // Deny access if not admin
-    res.status(403).send("Access Denied: You do not have administrator privileges.");
+    
+    // Deny access and render the 403 page
+    res.status(403).render('403', { 
+        title: 'Access Denied' 
+    });
 };
 
 module.exports = { isAdmin };

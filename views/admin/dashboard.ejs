@@ -1,39 +1,33 @@
-<%- include('../partials/header') %>
+<%- include('../partials/adminHeader') %>
 
-<div class="flex min-h-screen bg-gray-50">
-    <%- include('../partials/admin-sidebar', { activePage }) %>
 
-    <!-- Main Content -->
-    <main class="flex-1 p-4 md:p-8">
-        <h1 class="text-3xl font-bold text-[#2D1D30] mb-8">Dashboard</h1>
-        
-        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100">
-            <h2 class="text-xl font-bold mb-6 text-[#2D1D30]">Create New Content</h2>
-            <form action="/admin/save" method="POST">
-                <input type="text" name="title" placeholder="Post Title" class="w-full p-4 border border-gray-300 mb-6 rounded-xl outline-none focus:border-[#522D59]">
-                
-                <textarea id="summernote" name="content"></textarea>
-                
-                <button type="submit" class="mt-6 md:mt-8 bg-[#522D59] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#3D2142] transition">Save Content</button>
-            </form>
+<main class="flex-1 p-4 md:p-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-[#2D1D30]">Dashboard</h1>
+        <a href="/admin/blog" class="bg-[#522D59] text-white px-6 py-2 rounded-xl hover:bg-[#3D2142] transition">
+            + Add New Blog
+        </a>
+    </div>
+    
+    <!-- Analytics Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+            <p class="text-gray-500 text-sm">Total Published Blogs</p>
+            <h3 class="text-3xl font-bold text-[#2D1D30]"><%= totalBlogs %></h3>
         </div>
-    </main>
-</div>
+        <!-- Pending Inquiries Card -->
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 border-l-4 border-l-red-500">
+            <p class="text-gray-500 text-sm">Pending Inquiries</p>
+            <h3 class="text-3xl font-bold text-red-600"><%= pendingInquiries %></h3>
+            <a href="/admin/inquiries" class="text-xs text-red-500 underline mt-2 block">View Pending</a>
+        </div>
+        
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+            <p class="text-gray-500 text-sm">Gallery Items</p>
+            <h3 class="text-3xl font-bold text-[#2D1D30]"><%= totalGalleryItems %></h3>
+        </div>
+    </div>
+    
+    <!-- Existing Create Content form... -->
+</main>
 
-<script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            placeholder: 'Start writing your amazing content...',
-            tabsize: 2,
-            height: 300,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link', 'picture', 'video']]
-            ]
-        });
-    });
-</script>
-<%- include('../partials/footer') %>

@@ -18,9 +18,31 @@ router.use((req, res, next) => {
 });
 
 // Main Dashboard
-router.get('/admin/dashboard', isAdmin, (req, res) => {
-  res.render('admin/dashboard', { title: 'Admin Dashboard', activePage: 'dashboard' });
+// In routes/admin.js
+router.get('/admin/dashboard', isAdmin, async (req, res) => {
+    try {
+        const [counts] = await Promise.all([
+            sequelize.query(`
+                SELECT 
+                    (SELECT COUNT(*) FROM blog_posts) as totalBlogs,
+                    (SELECT COUNT(*) FROM inquiries WHERE status = 'unmarked') as pendingInquiries,
+                    (SELECT COUNT(*) FROM gallery) as totalGalleryItems
+            `)
+        ]);
+        
+        const data = counts[0][0];
+
+        res.render('admin/dashboard', { 
+            title: 'Admin Dashboard', 
+            activePage: 'dashboard',
+            ...data // Passes totalBlogs, pendingInquiries, totalGalleryItems
+        });
+    } catch (error) {
+        console.error("Dashboard Error:", error);
+        res.status(500).send("Error loading dashboard");
+    }
 });
+
 
 // Programs (admin view)
 router.get('/admin/programs', isAdmin, async (req, res) => {

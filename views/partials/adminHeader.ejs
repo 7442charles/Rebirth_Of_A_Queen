@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Rebirth of a Queen</title>
+    <title><%= title %> | Rebirth of a Queen</title>
     <meta name="robots" content="noindex, nofollow">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -16,8 +16,8 @@
 </head>
 <body class="bg-gray-50">
 
-<!-- Top Header (Visible always) -->
-<header class="bg-white border-b border-gray-200 p-4 flex items-center justify-between md:hidden">
+<!-- 1. Top Header: Only visible on mobile -->
+<header class="bg-white border-b border-gray-200 p-4 flex items-center justify-between md:hidden z-30 relative">
     <a href="/admin/dashboard">
         <img src="/images/rebirth_of_a_queen.png" alt="Logo" class="h-10 w-auto">
     </a>
@@ -30,15 +30,13 @@
     <!-- Mobile Overlay -->
     <div id="admin-sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
 
-    <!-- Sidebar -->
-    <aside id="admin-sidebar" class="fixed inset-y-0 left-0 w-64 z-50 bg-[#2D1D30] text-white p-6 transition-transform duration-300 ease-in-out transform -translate-x-full md:translate-x-0 md:static">
+    <!-- Sidebar: Fixed on mobile, Static on desktop -->
+    <aside id="admin-sidebar" class="fixed md:static inset-y-0 left-0 w-64 z-50 bg-[#2D1D30] text-white p-6 transition-transform duration-300 ease-in-out transform -translate-x-full md:translate-x-0">
         
         <div class="flex items-center justify-between mb-8">
-            <div class="flex items-center">
-                <a href="/admin/dashboard">
-                    <img src="/images/rebith_of_a_queen_white_logo.png" alt="Rebirth of a Queen" class="h-10 md:h-16 w-auto transition-all duration-300">
-                </a>
-            </div>
+            <a href="/admin/dashboard">
+                <img src="/images/rebith_of_a_queen_white_logo.png" alt="Logo" class="h-10 md:h-16 w-auto">
+            </a>
             <button id="admin-sidebar-close" type="button" class="md:hidden text-white">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -47,13 +45,15 @@
         <nav class="space-y-2">
             <a href="/admin/dashboard" class="block py-3 px-4 rounded-xl transition <%= activePage === 'dashboard' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">Dashboard</a>
             <a href="/admin/inquiries" class="block py-3 px-4 rounded-xl transition <%= activePage === 'inquiries' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">Inquiries</a>
-            <a href="/admin/programs" class="block py-3 px-4 rounded-xl transition <%= activePage === 'programs' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">Programs</a>
+            <!-- <a href="/admin/programs" class="block py-3 px-4 rounded-xl transition <%= activePage === 'programs' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">Programs</a> -->
             <a href="/admin/blog" class="block py-3 px-4 rounded-xl transition <%= activePage === 'blog' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">Blog Posts</a>
             <a href="/admin/gallery" class="block py-3 px-4 rounded-xl transition <%= activePage === 'gallery' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">Gallery</a>
             <a href="/admin/settings" class="block py-3 px-4 rounded-xl transition <%= activePage === 'settings' ? 'bg-[#522D59]' : 'hover:bg-[#522D59]' %>">Settings</a>
         </nav>
     </aside>
 
+    <!-- Main Content wrapper starts here -->
+    <main class="flex-1 w-full p-4 md:p-8">
 <script>
     (function () {
         const toggle = document.getElementById('admin-sidebar-toggle');
@@ -70,8 +70,8 @@
             overlay.classList.add('hidden'); 
         };
 
-        toggle.addEventListener('click', open);
-        closeBtn.addEventListener('click', close);
-        overlay.addEventListener('click', close);
+        if(toggle) toggle.addEventListener('click', open);
+        if(closeBtn) closeBtn.addEventListener('click', close);
+        if(overlay) overlay.addEventListener('click', close);
     })();
 </script>

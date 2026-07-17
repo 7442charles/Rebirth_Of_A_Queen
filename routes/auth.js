@@ -57,7 +57,7 @@ router.post('/login', async (req, res) => {
         });
 
         // Determine Redirect URL based on role
-        const redirectUrl = user.role === 'admin' ? '/admin-dashboard' : '/';
+        const redirectUrl = user.role === 'admin' ? '/admin/dashboard' : '/';
 
         res.status(200).json({ 
             message: "Login successful!", 
