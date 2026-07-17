@@ -1,0 +1,112 @@
+<%- include('partials/header') %>
+
+<!-- Hero Section -->
+<section class="relative h-[60vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 bg-[#522D59]/80 z-10"></div>
+    <img src="/images/Amka_Creations_products.png" alt="Social Enterprises" class="absolute inset-0 w-full h-full object-cover">
+    
+    <div class="relative z-20 text-center text-white px-6">
+        <span class="text-sm uppercase tracking-widest text-[#FFD700] mb-4 block">— Social Enterprises</span>
+        <h1 class="text-4xl md:text-6xl font-bold max-w-3xl mx-auto leading-tight">
+            Economic empowerment is central to lasting recovery.
+        </h1>
+    </div>
+</section>
+
+<!-- Amka Creations Section -->
+<section class="bg-[#F5EDF0] py-16 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <!-- Left Side: Text -->
+        <div>
+            <span class="text-sm uppercase tracking-widest text-[#9D7048] font-semibold mb-2 block">— Amka Creations</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-[#2D1D30] mb-6 leading-tight">
+                A collaborative production hub
+            </h2>
+            <p class="text-gray-700 text-lg mb-8 leading-relaxed">
+                Specializing in apparel, leather products, branding, skincare, detergents, food processing, and other locally made products. Amka Creations gives survivors hands-on training and a route into dignified, sustainable work.
+            </p>
+            <a href="/get-involved" class="inline-block border-2 border-[#522D59] text-[#522D59] font-semibold py-3 px-8 rounded-full hover:bg-[#522D59] hover:text-white transition">
+                Buy or partner with Amka
+            </a>
+        </div>
+
+        <!-- Right Side: Image -->
+        <div class="order-first md:order-last">
+            <img src="/images/Amka_Creations_products.png" alt="Amka Creations Products" class="w-full h-auto rounded-3xl shadow-lg">
+        </div>
+    </div>
+</section>
+
+<!-- Fitness Buddies Section -->
+<section class="bg-[#FDFBF7] py-16 px-6">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <!-- Left Side: Image -->
+        <div>
+            <img src="/images/Fitness_Buddies_group.png" alt="Fitness Buddies Group" class="w-full h-auto rounded-3xl shadow-lg">
+        </div>
+
+        <!-- Right Side: Text -->
+        <div>
+            <span class="text-sm uppercase tracking-widest text-[#9D7048] font-semibold mb-2 block">— Fitness Buddies</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-[#2D1D30] mb-6 leading-tight">
+                Wellness for the whole person
+            </h2>
+            <p class="text-gray-700 text-lg mb-8 leading-relaxed">
+                Promoting holistic wellness through fitness, mental health, nutrition, and healthy living — because recovery isn't only economic, it's physical and emotional too.
+            </p>
+            <a href="/get-involved" class="inline-block border-2 border-[#522D59] text-[#522D59] font-semibold py-3 px-8 rounded-full hover:bg-[#522D59] hover:text-white transition">
+                Get involved with Fitness Buddies
+            </a>
+        </div>
+    </div>
+</section>
+
+    <section id="gallery" class="py-20 bg-[#F1E6EF] overflow-hidden">
+        <div class="text-center mb-12 px-6">
+            <span class="text-[#522D59] font-bold tracking-widest uppercase text-sm border-l-4 border-yellow-400 pl-4">A SKILL IS A DOOR</span>
+            <h2 class="text-4xl md:text-5xl font-extrabold text-[#2D1D30] mt-4">A livelihood is a future.</h2>
+        </div>
+
+        <!-- Marquee Container -->
+        <div class="flex overflow-hidden">
+            <div class="flex animate-marquee gap-6">
+                <% 
+                    const images = [
+                        '/images/Graphic_design_training.png', '/images/Tailoring_training.png', '/images/Amka_Creations_products.png', 
+                        '/images/Fitness_Buddies_group.png', '/images/Fitness_Buddies_group.png', '/images/Photography_training_outdoors.png'
+                    ]; 
+                %>
+                
+                <!-- List 1 -->
+                <% images.forEach(img => { %>
+                    <img src="<%= img %>" class="h-64 w-96 object-cover rounded-2xl flex-shrink-0" alt="Moment from the field">
+                <% }); %>
+
+                <!-- List 2 (Duplicate for seamless loop) -->
+                <% images.forEach(img => { %>
+                    <img src="<%= img %>" class="h-64 w-96 object-cover rounded-2xl flex-shrink-0" alt="Moment from the field">
+                <% }); %>
+            </div>
+        </div>
+    </section>
+
+<!-- Support Section -->
+<section class="bg-[#FDFBF7] py-20 px-6 text-center">
+    <div class="max-w-3xl mx-auto">
+        <span class="text-sm uppercase tracking-widest text-[#9D7048] font-semibold mb-4 block">— Support This Work</span>
+        <h2 class="text-4xl md:text-5xl font-bold text-[#2D1D30] mb-10 leading-tight">
+            Purchase, partner, or volunteer with our enterprises.
+        </h2>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="/donate" class="bg-[#522D59] text-white font-semibold py-3 px-8 rounded-full hover:bg-[#3D2142] transition">
+                Support Our Mission
+            </a>
+            <a href="/get-involved" class="border-2 border-[#522D59] text-[#522D59] font-semibold py-3 px-8 rounded-full hover:bg-[#522D59] hover:text-white transition">
+                Partner With Us
+            </a>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>

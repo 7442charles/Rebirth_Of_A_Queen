@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2026 at 04:11 AM
+-- Generation Time: Jul 17, 2026 at 09:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,6 +69,33 @@ INSERT INTO `gallery` (`id`, `image_path`, `alt_text`, `uploaded_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `inquiries`
+--
+
+CREATE TABLE `inquiries` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `interest` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` enum('Pending','Answered') DEFAULT 'Pending',
+  `message` text NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inquiries`
+--
+
+INSERT INTO `inquiries` (`id`, `name`, `email`, `interest`, `created_at`, `status`, `message`) VALUES
+(1, 'mike rose', 'cking6951@gmail.com', 'partnership', '2026-07-17 05:59:41', 'Answered', ''),
+(2, 'CHARLES KINARO NGECHU', 'mikeross@gmail.com', 'volunteer', '2026-07-17 06:03:25', 'Pending', ''),
+(3, 'CHARLES KINARO ', 'mikeross@gmail.com', 'general', '2026-07-17 06:05:08', 'Pending', ''),
+(4, 'CHARLES KINARO NGECHU', 'mikeross@gmail.com', 'General Contact', '2026-07-17 06:34:45', 'Pending', 'hello i wasnted to '),
+(5, 'CHARLES', 'mikeross@gmail.com', 'General Contact', '2026-07-17 06:37:38', 'Answered', 'hello there ');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_resets`
 --
 
@@ -90,6 +117,18 @@ CREATE TABLE `programs` (
   `title` varchar(255) NOT NULL,
   `body_text` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int(11) UNSIGNED NOT NULL,
+  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -152,6 +191,12 @@ ALTER TABLE `gallery`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `inquiries`
+--
+ALTER TABLE `inquiries`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -164,6 +209,12 @@ ALTER TABLE `password_resets`
 --
 ALTER TABLE `programs`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`session_id`);
 
 --
 -- Indexes for table `settings`
@@ -194,6 +245,12 @@ ALTER TABLE `blog_posts`
 --
 ALTER TABLE `gallery`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `inquiries`
+--
+ALTER TABLE `inquiries`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `password_resets`

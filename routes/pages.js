@@ -155,7 +155,7 @@ router.get('/get-involved', (req, res) => {
                 message 
             });
 
-            res.redirect('/contact?status=success');
+            res.redirect('/?status=success');
         } catch (error) {
             console.error("Submission Error:", error);
             res.status(500).send("Error submitting form.");
@@ -165,6 +165,13 @@ router.get('/contact', (req, res) => {
     res.render('contact', { 
         title: 'Contact Us | Rebirth of a Queen',
         activePage: 'contact' 
+    });
+});
+
+router.get('/social-enterprises', (req, res) => {
+    res.render('social-enterprises', { 
+        title: 'Social Enterprises | Rebirth of a Queen',
+        activePage: 'social-enterprises'
     });
 });
 

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 const { sequelize } = require('./config/db');
 
 const app = express();
@@ -12,33 +13,44 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Session Store Configuration
+const sessionStore = new MySQLStore({
+    host: process.env.DB_HOST,
+    port: 3306,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    clearExpired: true,
+    checkExpirationInterval: 900000 // 15 minutes
+});
+
 // Session Middleware
 app.use(session({
-    secret: 'your-very-secure-random-string',
+    key: 'rebirth_session_cookie',
+    secret: process.env.SESSION_SECRET || 'a-very-long-and-secure-random-string',
+    store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: { 
-        secure: false,
-        maxAge: 1000 * 60 * 60 * 24 
+        secure: process.env.NODE_ENV === 'production', // true if using HTTPS
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 // 1 day
     }
 }));
 
-// GLOBAL MIDDLEWARE (Must be placed BEFORE routes)
-// 1. Donation Link Middleware
+// GLOBAL MIDDLEWARE
 app.use(async (req, res, next) => {
     try {
         const [results] = await sequelize.query("SELECT value FROM settings WHERE `key` = 'donation_link'");
         res.locals.donationLink = (results && results.length > 0) ? results[0].value : '#';
     } catch (e) {
         res.locals.donationLink = '#';
-        console.error("Error loading donation link:", e);
     }
     next();
 });
 
-// 2. Global Title Middleware (Fixes your "title is not defined" error)
 app.use((req, res, next) => {
-    res.locals.title = 'Rebirth of a Queen'; // Default title
+    res.locals.title = 'Rebirth of a Queen';
     next();
 });
 
@@ -48,13 +60,12 @@ const testRoutes = require('./routes/test');
 const adminRoutes = require('./routes/admin');
 const pageRoutes = require('./routes/pages');
 
-// Use the routes (Now routes have access to session and locals)
 app.use('/', pageRoutes);
 app.use('/', authRoutes);
 app.use('/', testRoutes);
 app.use('/', adminRoutes);
 
-// 404 Catch-all route
+// 404 Catch-all
 app.use((req, res, next) => {
     res.status(404).render('404', { 
         title: '404 - Page Not Found',
@@ -64,7 +75,6 @@ app.use((req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-// Database Connection Check
 sequelize.authenticate()
   .then(() => {
     console.log(`✅ Database connected: ${process.env.NODE_ENV === 'production' ? 'PRODUCTION' : 'LOCAL'}`);
