@@ -1,0 +1,67 @@
+<%- include('partials/header') %>
+
+<main class="max-w-7xl mx-auto px-6 py-16">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Content Section -->
+        <div>
+            <h1 class="text-4xl md:text-5xl font-bold text-[#2D1D30] mb-6">Join Our Mission</h1>
+            <p class="text-lg text-gray-600 mb-8">
+                Rebirth of a Queen is dedicated to empowering survivors of SGBV and human trafficking, helping them reclaim their power through education, training, and safe community spaces.
+            </p>
+            
+            <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                    <div class="bg-yellow-400 text-[#2D1D30] p-3 rounded-xl font-bold">01</div>
+                    <div>
+                        <h3 class="font-bold text-lg">Donate</h3>
+                        <p class="text-gray-600 text-sm">Your contributions directly support our safe house, counseling services, and vocational training programs.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="bg-yellow-400 text-[#2D1D30] p-3 rounded-xl font-bold">02</div>
+                    <div>
+                        <h3 class="font-bold text-lg">Volunteer</h3>
+                        <p class="text-gray-600 text-sm">Lend your skills in photography, crafts, or mentorship to help our survivors build sustainable futures.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact/Lead Form -->
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-bold mb-6">Let's Connect</h2>
+            <form action="/inquiry/contact" method="POST" class="space-y-4">
+                <input type="text" name="name" placeholder="Your Full Name" required class="w-full p-4 border rounded-xl outline-none focus:border-[#522D59]">
+                <input type="email" name="email" placeholder="Email Address" required class="w-full p-4 border rounded-xl outline-none focus:border-[#522D59]">
+                <select name="interest" class="w-full p-4 border rounded-xl bg-white">
+                    <option value="general">How can you help?</option>
+                    <option value="donate">Donation Inquiry</option>
+                    <option value="volunteer">Volunteer Opportunity</option>
+                    <option value="partnership">Corporate Partnership</option>
+                </select>
+                <button type="submit" class="w-full bg-[#522D59] text-white py-4 rounded-xl font-bold hover:bg-[#3D2142] transition">
+                    Submit Inquiry
+                </button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include('partials/footer') %>
+
+<script>
+    // Check if the URL has ?status=success
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('status') === 'success') {
+        Swal.fire({
+            title: 'Request Submitted!',
+            text: 'Thank you for reaching out. We have received your inquiry and will contact you as soon as possible.',
+            icon: 'success',
+            confirmButtonColor: '#522D59',
+            confirmButtonText: 'Okay'
+        }).then(() => {
+            // Clean the URL so the alert doesn't show on page refresh
+            window.history.replaceState({}, document.title, window.location.pathname);
+        });
+    }
+</script>

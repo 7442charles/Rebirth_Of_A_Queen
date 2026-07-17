@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2026 at 10:28 PM
+-- Generation Time: Jul 16, 2026 at 04:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,6 +36,15 @@ CREATE TABLE `blog_posts` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `blog_posts`
+--
+
+INSERT INTO `blog_posts` (`id`, `title`, `slug`, `content`, `author_id`, `created_at`) VALUES
+(1, 'Community Awareness Session: Preventing Harm Early', 'community-awareness-session-preventing-harm-early', '<p><strong>Why awareness matters</strong></p><p>Rebirth of a Queen leads community sessions that help people recognize warning signs and take action early.</p>', 1, '2026-07-15 19:48:29'),
+(2, 'Skills for Independence: Empowering Through Social Enterprises', 'skills-for-independence-empowering-through-social-enterprises', '<p><strong>Economic empowerment</strong></p><p>Our social enterprises provide vocational skills and income opportunities to support long-term recovery.</p>', 1, '2026-07-15 19:48:29'),
+(5, 'A TEST BLOG', 'a-test-blog', '<p>A blog to test if the page is working as expected<br></p>', 10, '2026-07-16 01:23:43');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +57,14 @@ CREATE TABLE `gallery` (
   `alt_text` varchar(255) DEFAULT NULL,
   `uploaded_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `gallery`
+--
+
+INSERT INTO `gallery` (`id`, `image_path`, `alt_text`, `uploaded_at`) VALUES
+(1, '/uploads/1784128906569-Tailoring_training.png', 'Gallery Image', '2026-07-15 15:21:46'),
+(2, '/uploads/1784129798539-program_2.png', 'Gallery Image', '2026-07-15 15:36:38');
 
 -- --------------------------------------------------------
 
@@ -170,13 +187,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `blog_posts`
 --
 ALTER TABLE `blog_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `password_resets`

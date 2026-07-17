@@ -193,4 +193,23 @@ router.post('/admin/settings/update-donation', isAdmin, async (req, res) => {
   }
 });
 
+// View all inquiries
+router.get('/admin/inquiries', async (req, res) => {
+    const [inquiries] = await sequelize.query("SELECT * FROM inquiries ORDER BY created_at DESC");
+    
+    res.render('admin/inquiries', { 
+        inquiries, 
+        activePage: 'inquiries' // This activates the link in the sidebar
+    });
+});
+
+// Mark as answered
+router.post('/admin/inquiries/mark-answered/:id', async (req, res) => {
+    await sequelize.query(
+        "UPDATE inquiries SET status = 'Answered' WHERE id = ?",
+        { replacements: [req.params.id] }
+    );
+    res.redirect('/admin/inquiries');
+});
+
 module.exports = router;

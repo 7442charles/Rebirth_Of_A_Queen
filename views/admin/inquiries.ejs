@@ -1,0 +1,79 @@
+<%- include('../partials/adminHeader') %>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<main class="max-w-6xl mx-auto px-6 py-16">
+    <h1 class="text-3xl font-bold text-[#522D59] mb-8">Pending Inquiries</h1>
+    
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-gray-50 border-b">
+                <tr>
+                    <th class="p-6">Name</th>
+                    <th class="p-6">Email</th>
+                    <th class="p-6">Interest</th>
+                    <th class="p-6">Message</th>
+                    <th class="p-6">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% inquiries.forEach(inq => { %>
+                <tr class="border-b hover:bg-purple-50 transition cursor-pointer" 
+                    onclick="showDetails('<%= inq.id %>', '<%= inq.name %>', '<%= inq.email %>', '<%= inq.interest %>', `<%= (inq.message || '').replace(/\n/g, '\\n') %>`, '<%= inq.status %>')">
+                    
+                    <td class="p-6 font-medium"><%= inq.name %></td>
+                    <td class="p-6 text-gray-600"><%= inq.email %></td>
+                    <td class="p-6">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">
+                            <%= inq.interest %>
+                        </span>
+                    </td>
+                    <td class="p-6 text-sm text-gray-500 italic max-w-xs truncate">
+                        <%= inq.message %>
+                    </td>
+                    <td class="p-6">
+                        <span class="<%= inq.status === 'Answered' ? 'text-green-600' : 'text-red-600' %> font-bold">
+                            <%= inq.status %>
+                        </span>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<script>
+    function showDetails(id, name, email, interest, message, status) {
+        Swal.fire({
+            title: 'Inquiry Details',
+            html: `
+                <div class="text-left space-y-4">
+                    <div><strong class="text-[#522D59]">Name:</strong> ${name}</div>
+                    <div><strong class="text-[#522D59]">Email:</strong> ${email}</div>
+                    <div><strong class="text-[#522D59]">Interest:</strong> ${interest}</div>
+                    <div class="border-t pt-4">
+                        <strong class="text-[#522D59]">Message:</strong>
+                        <p class="mt-2 text-gray-700 bg-gray-50 p-4 rounded-lg italic text-sm">
+                            ${message || 'No message provided.'}
+                        </p>
+                    </div>
+                </div>
+            `,
+            showCancelButton: true,
+            cancelButtonText: 'Close',
+            confirmButtonText: status === 'Pending' ? 'Mark Answered' : 'Already Answered',
+            confirmButtonColor: '#522D59',
+            showConfirmButton: status === 'Pending', // Only show if pending
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit a hidden form programmatically
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/admin/inquiries/mark-answered/${id}`;
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+</script>

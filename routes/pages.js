@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { sequelize } = require('../config/db');
 const { isAdmin } = require('../middleware/authMiddleware');
+const { sendInquiryEmail } = require('../services/emailService');
 
 /* Home Route */
 router.get('/', async (req, res) => {
@@ -11,7 +12,7 @@ router.get('/', async (req, res) => {
         );
 
         res.render('index', {
-            title: 'Home',
+            title: 'Rebirth of a Queen',
             latestPosts: latestPosts || []
         });
     } catch (e) {
@@ -103,6 +104,67 @@ router.get('/admin-dashboard', isAdmin, (req, res) => {
     res.render('admin/dashboard', { 
         title: 'Admin Dashboard | Rebirth of a Queen',
         activePage: 'dashboard'
+    });
+});
+
+router.get('/about', (req, res) => {
+    res.render('about', { 
+        title: 'About Us | Rebirth of a Queen',
+        activePage: 'about' 
+    });
+});
+
+router.get('/shop', (req, res) => {
+    res.render('shop', { 
+        title: 'Shop | Rebirth of a Queen',
+        activePage: 'shop' 
+    });
+});
+
+router.get('/get-involved', (req, res) => {
+    res.render('get-involved', { 
+        title: 'Get Involved | Rebirth of a Queen',
+        activePage: 'get-involved' 
+    });
+});
+
+    router.post('/inquiry/contact', async (req, res) => {
+        try {
+            const { name, email, interest, message } = req.body;
+
+            // 1. Save to Database
+            // We use COALESCE or default values if interest/message is missing
+            await sequelize.query(
+                'INSERT INTO inquiries (name, email, interest, message) VALUES (?, ?, ?, ?)',
+                { 
+                    replacements: [
+                        name, 
+                        email, 
+                        interest || 'General Contact', 
+                        message || 'No message provided'
+                    ], 
+                    type: sequelize.QueryTypes.INSERT 
+                }
+            );
+
+            // 2. Send Email (Simulation or Production)
+            await sendInquiryEmail({ 
+                name, 
+                email, 
+                interest: interest || 'General Contact',
+                message 
+            });
+
+            res.redirect('/contact?status=success');
+        } catch (error) {
+            console.error("Submission Error:", error);
+            res.status(500).send("Error submitting form.");
+        }
+    });
+router.get('/contact', (req, res) => {
+    res.render('contact', { 
+        title: 'Contact Us | Rebirth of a Queen',
+        activePage: 'contact' 
     });
 });
 
