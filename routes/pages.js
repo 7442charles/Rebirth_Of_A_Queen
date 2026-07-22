@@ -47,6 +47,16 @@ router.get('/blog', async (req, res) => {
     });
 });
 
+// NEW: Route for viewing all blogs
+router.get('/blog/all', async (req, res) => {
+    const [posts] = await sequelize.query("SELECT * FROM blog_posts ORDER BY created_at DESC");
+    res.render('all-blogs', {
+        title: 'All Blogs | Rebirth of a Queen',
+        activePage: 'blog',
+        posts: posts || []
+    });
+});
+
 router.get('/blog/:slug', async (req, res) => {
     const { slug } = req.params;
     const [rows] = await sequelize.query("SELECT * FROM blog_posts WHERE slug = ? LIMIT 1", { replacements: [slug] });

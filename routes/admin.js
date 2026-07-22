@@ -79,83 +79,92 @@ router.post('/admin/programs/save', isAdmin, async (req, res) => {
   }
 });
 
-// Blog (admin manager view)
+// View Blog Manager Page
 router.get('/admin/blog', isAdmin, async (req, res) => {
-  const [posts] = await sequelize.query(
-    "SELECT * FROM blog_posts ORDER BY created_at DESC"
-  );
-  res.render('admin/blog', {
-    title: 'Blog Manager',
-    activePage: 'blog',
-    posts: posts || []
-  });
-});
-
-// Blog create/update via existing dashboard form action (/admin/save)
-router.post('/admin/save', isAdmin, async (req, res) => {
-  // dashboard currently posts: title, content
-  // blog_posts columns: title, slug, content, author_id
-  const { title, content, id } = req.body;
-  const safeTitle = (title || '').trim();
-  if (!safeTitle) return res.status(400).json({ message: 'Title is required' });
-
-  const generatedSlug = slugify(safeTitle);
-  try {
-    if (id) {
-      // Update existing
-      await sequelize.query(
-        "UPDATE blog_posts SET title = ?, slug = ?, content = ? WHERE id = ?",
-        { replacements: [safeTitle, generatedSlug, content || null, id] }
-      );
-    } else {
-      // Create new
-      const authorId = req.session?.userId || null;
-      await sequelize.query(
-        "INSERT INTO blog_posts (title, slug, content, author_id) VALUES (?, ?, ?, ?)",
-        { replacements: [safeTitle, generatedSlug, content || null, authorId] }
-      );
+    try {
+        const [posts] = await sequelize.query("SELECT * FROM blog_posts ORDER BY created_at DESC");
+        res.render('admin/blog', {
+            title: 'Blog Manager',
+            activePage: 'blog',
+            blogs: posts || [],
+            csrfToken: req.csrfToken ? req.csrfToken() : '' // Optional if using CSRF
+        });
+    } catch (error) {
+        console.error("Error loading blog manager:", error);
+        res.status(500).send("Error loading blog manager");
     }
-    res.redirect('/admin/blog');
-  } catch (e) {
-    console.error(e);
-    res.status(500).send('Failed to save blog post.');
-  }
 });
 
-// Blog edit fetch (AJAX)
-router.get('/admin/blog/:id', isAdmin, async (req, res) => {
-  const { id } = req.params;
-  const [rows] = await sequelize.query("SELECT * FROM blog_posts WHERE id = ?", { replacements: [id] });
-  if (!rows || rows.length === 0) return res.status(404).json({ message: 'Not found' });
-  res.json(rows[0]);
+// Create New Blog Post
+router.post('/admin/blog', isAdmin, upload.any(), async (req, res) => {
+    try {
+        const { title, excerpt, content } = req.body;
+        const file = req.files ? req.files.find(f => f.fieldname === 'coverImage') : null;
+        const coverImage = file ? '/uploads/' + file.filename : null;
+        const slug = slugify(title);
+        const authorId = req.session?.userId || null;
+
+        await sequelize.query(
+            "INSERT INTO blog_posts (title, slug, excerpt, content, cover_image, author_id) VALUES (?, ?, ?, ?, ?, ?)",
+            { replacements: [title, slug, excerpt || null, content || null, coverImage, authorId] }
+        );
+
+        res.redirect('/admin/blog');
+    } catch (error) {
+        console.error("Error creating blog:", error);
+        res.status(500).send("Failed to create blog post.");
+    }
 });
 
-/**
- * Blog image upload (for Summernote media insertion)
- * Expects multipart form-data field name: `image`
- * Returns: { url: '/uploads/<filename>' }
- */
-router.post('/admin/blog/upload-image', isAdmin, upload.single('image'), async (req, res) => {
-  try {
-    if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
-    const imageUrl = '/uploads/' + req.file.filename;
-    res.json({ url: imageUrl });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: 'Image upload failed' });
-  }
+// Edit Existing Blog Post
+router.post('/admin/blogs/edit/:id', isAdmin, upload.any(), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, excerpt, content } = req.body;
+        const file = req.files ? req.files.find(f => f.fieldname === 'coverImage') : null;
+        const slug = title ? slugify(title) : undefined;
+
+        // Check if a new file was uploaded to handle image updates conditionally
+        if (file) {
+            const coverImage = '/uploads/' + file.filename;
+            await sequelize.query(
+                "UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ?, cover_image = ? WHERE id = ?",
+                { replacements: [title, slug, excerpt, content, coverImage, id] }
+            );
+        } else {
+            await sequelize.query(
+                "UPDATE blog_posts SET title = ?, slug = ?, excerpt = ?, content = ? WHERE id = ?",
+                { replacements: [title, slug, excerpt, content, id] }
+            );
+        }
+
+        res.redirect('/admin/blog');
+    } catch (error) {
+        console.error("Error updating blog:", error);
+        res.status(500).send("Failed to update blog post.");
+    }
 });
 
-// Blog delete
+// Fetch Single Blog Data (For AJAX Editing Injection)
+router.get('/admin/blog/json/:id', isAdmin, async (req, res) => {
+    try {
+        const [rows] = await sequelize.query("SELECT * FROM blog_posts WHERE id = ?", { replacements: [req.params.id] });
+        if (!rows || rows.length === 0) return res.status(404).json({ message: 'Blog not found' });
+        res.json(rows[0]);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Delete Blog Post
 router.post('/admin/blog/:id/delete', isAdmin, async (req, res) => {
-  const { id } = req.params;
-  try {
-    await sequelize.query("DELETE FROM blog_posts WHERE id = ?", { replacements: [id] });
-    res.json({ message: 'Deleted' });
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: 'Delete failed' });
-  }
+    try {
+        await sequelize.query("DELETE FROM blog_posts WHERE id = ?", { replacements: [req.params.id] });
+        res.redirect('/admin/blog');
+    } catch (error) {
+        console.error("Error deleting blog:", error);
+        res.status(500).send("Failed to delete blog post.");
+    }
 });
 
 // Gallery (admin view)

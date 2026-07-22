@@ -1,16 +1,15 @@
-<%- include('./partials/header', { title: title || 'Blog | Rebirth of a Queen' }) %>
+<%- include('./partials/header', { title: title || 'All Blogs | Rebirth of a Queen' }) %>
 
 <main class="max-w-6xl mx-auto px-4 py-10">
-  <div class="flex items-end justify-between gap-4 mb-8">
-    <div>
-      <h1 class="text-3xl md:text-4xl font-bold text-[#2D1D30]">Blog</h1>
-      <p class="text-gray-600 mt-2">Latest stories and updates from Rebirth of a Queen.</p>
-    </div>
+  <div class="mb-8">
+    <a href="/blog" class="text-purple-700 font-semibold hover:underline">&larr; Back to Home Blog</a>
+    <h1 class="text-3xl md:text-4xl font-bold text-[#2D1D30] mt-4">All Blog Posts</h1>
+    <p class="text-gray-600 mt-2">Explore all stories, updates, and announcements from Rebirth of a Queen.</p>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <% if (posts && posts.length) { %>
-      <% posts.slice(0, 4).forEach(post => { %>
+      <% posts.forEach(post => { %>
         <a href="/blog/<%= post.slug %>" class="group bg-white border border-gray-100 rounded-3xl p-6 hover:shadow-sm transition">
           <div class="flex items-center justify-between gap-4">
             <h2 class="text-xl font-bold text-[#2D1D30] group-hover:text-purple-800 transition">
@@ -29,19 +28,10 @@
       <% }) %>
     <% } else { %>
       <div class="col-span-full text-center text-gray-400 py-12">
-        No blog posts yet.
+        No blog posts found.
       </div>
     <% } %>
   </div>
-
-  <!-- Button to view all blogs -->
-  <% if (posts && posts.length > 0) { %>
-    <div class="mt-12 text-center">
-      <a href="/blog/all" class="inline-flex items-center justify-center px-8 py-3 bg-[#2D1D30] text-white font-semibold rounded-full hover:bg-purple-900 transition shadow-sm">
-        View All Blogs &rarr;
-      </a>
-    </div>
-  <% } %>
 </main>
 
 <%- include('./partials/footer') %>

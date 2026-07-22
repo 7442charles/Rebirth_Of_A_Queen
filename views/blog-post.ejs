@@ -1,7 +1,7 @@
 <%- include('./partials/header', { title: title || post.title + ' | Rebirth of a Queen' }) %>
 
 <main class="max-w-3xl mx-auto px-4 py-10">
-  <a href="/blog" class="text-primary font-semibold hover:underline">&larr; Back to Blog</a>
+  <a href="/blog" class="text-purple-700 font-semibold hover:underline">&larr; Back to Blog</a>
 
   <h1 class="text-3xl md:text-4xl font-bold text-[#2D1D30] mt-4">
     <%= post.title %>
@@ -11,7 +11,7 @@
     <%= post.created_at ? new Date(post.created_at).toLocaleDateString() : '' %>
   </div>
 
-  <article class="mt-8 bg-white border border-gray-100 rounded-3xl p-6 md:p-8">
+  <article class="mt-8 bg-white border border-gray-100 rounded-3xl p-6 md:p-8 shadow-sm">
     <div class="prose max-w-none text-[#2D1D30]">
       <%- post.content %>
     </div>

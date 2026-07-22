@@ -13,6 +13,15 @@
     <script>
         tailwind.config = { theme: { extend: { colors: { primary: '#522D59' } } } }
     </script>
+    <style>
+        /* Ensure TinyMCE or similar editor dialogs float cleanly above Tailwind layout wrappers */
+        .tox.tox-silver-sky, .tox-dialog-wrap, .tox-fullscreen {
+        z-index: 100000 !important;
+        }
+        .tox-dialog {
+        z-index: 100001 !important;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
 
